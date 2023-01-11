@@ -1,4 +1,4 @@
-package com.optimagrowth.license.utils;
+package com.optimagrowth.organization.utils;
 
 import laskin.UserContext;
 import laskin.UserContextHolder;
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-
 
 
 @Component
