@@ -3,6 +3,7 @@ package com.optimagrowth.license.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.optimagrowth.license.model.License;
 import com.optimagrowth.license.service.LicenseService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value="v1/organization/{organizationId}/license")
 public class LicenseController {
@@ -27,12 +30,14 @@ public class LicenseController {
 	private LicenseService licenseService;
 
 	@RequestMapping(value="/{licenseId}",method = RequestMethod.GET)
-	public ResponseEntity<License> getLicense( @PathVariable("organizationId") String organizationId,
-			@PathVariable("licenseId") String licenseId) {
+	public ResponseEntity<License> getLicense(@PathVariable("organizationId") String organizationId,
+											  @PathVariable("licenseId") String licenseId,
+											  HttpServletRequest request) {
 
+		String header = request.getHeader("tmx-correlation-id");
 		License license = licenseService.getLicense(licenseId, organizationId, "");
-		license.add( 
-				linkTo(methodOn(LicenseController.class).getLicense(organizationId, license.getLicenseId())).withSelfRel(),
+		license.add(
+				linkTo(methodOn(LicenseController.class).getLicense(organizationId, license.getLicenseId(), request)).withSelfRel(),
 				linkTo(methodOn(LicenseController.class).createLicense(license)).withRel("createLicense"),
 				linkTo(methodOn(LicenseController.class).updateLicense(license)).withRel("updateLicense"),
 				linkTo(methodOn(LicenseController.class).deleteLicense(license.getLicenseId())).withRel("deleteLicense")

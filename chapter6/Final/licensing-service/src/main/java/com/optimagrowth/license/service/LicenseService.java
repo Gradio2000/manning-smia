@@ -3,6 +3,7 @@ package com.optimagrowth.license.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.optimagrowth.license.service.client.MyWebClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.optimagrowth.license.repository.LicenseRepository;
 import com.optimagrowth.license.service.client.OrganizationDiscoveryClient;
 import com.optimagrowth.license.service.client.OrganizationFeignClient;
 import com.optimagrowth.license.service.client.OrganizationRestTemplateClient;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class LicenseService {
@@ -35,6 +37,10 @@ public class LicenseService {
 
 	@Autowired
 	OrganizationDiscoveryClient organizationDiscoveryClient;
+
+	@Autowired
+	MyWebClient myWebClient;
+
 
 	public License getLicense(String licenseId, String organizationId, String clientType){
 		License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
@@ -70,7 +76,8 @@ public class LicenseService {
 			organization = organizationDiscoveryClient.getOrganization(organizationId);
 			break;
 		default:
-			organization = organizationRestClient.getOrganization(organizationId);
+//			organization = organizationRestClient.getOrganization(organizationId);
+			organization = myWebClient.getOrganization(organizationId);
 			break;
 		}
 
