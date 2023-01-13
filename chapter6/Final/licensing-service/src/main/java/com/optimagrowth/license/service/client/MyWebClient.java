@@ -3,9 +3,6 @@ package com.optimagrowth.license.service.client;
 import com.optimagrowth.license.model.Organization;
 import laskin.UserContext;
 import laskin.UserContextHolder;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
