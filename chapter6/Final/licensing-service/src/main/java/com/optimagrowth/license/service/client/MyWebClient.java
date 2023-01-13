@@ -1,6 +1,8 @@
 package com.optimagrowth.license.service.client;
 
 import com.optimagrowth.license.model.Organization;
+import laskin.UserContext;
+import laskin.UserContextHolder;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
@@ -20,6 +22,10 @@ public class MyWebClient {
     public Organization getOrganization(String organizationId){
         return webClient.get()
                 .uri("http://organization-service/v1/organization/" + organizationId)
+                .header(UserContext.CORRELATION_ID, UserContextHolder.getContext().getCorrelationId())
+                .header(UserContext.ORGANIZATION_ID, UserContextHolder.getContext().getOrganizationId())
+                .header(UserContext.USER_ID, UserContextHolder.getContext().getUserId())
+                .header(UserContext.AUTH_TOKEN, UserContextHolder.getContext().getAuthToken())
                 .retrieve()
                 .bodyToMono(Organization.class)
                 .block();
