@@ -1,10 +1,10 @@
-package com.optimagrowth.eureka;
+package com.optimagrowth.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EurekaServerApplicationTests {
+class ConfigurationServerApplication1Tests {
 
 	@Test
 	void contextLoads() {

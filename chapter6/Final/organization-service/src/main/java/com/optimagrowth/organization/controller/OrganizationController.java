@@ -1,12 +1,15 @@
 package com.optimagrowth.organization.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.optimagrowth.organization.model.Organization;
 import com.optimagrowth.organization.service.OrganizationService;
+
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping(value="v1/organization")
@@ -20,7 +23,7 @@ public class OrganizationController {
         return ResponseEntity.ok(service.findById(organizationId));
     }
 
-    @RequestMapping(value="/{organizationId}",method = RequestMethod.PUT)
+    @PutMapping(value="/{organizationId}")
     public void updateOrganization( @PathVariable("organizationId") String id, @RequestBody Organization organization) {
         service.update(organization);
     }
@@ -30,10 +33,18 @@ public class OrganizationController {
     	return ResponseEntity.ok(service.create(organization));
     }
 
-    @RequestMapping(value="/{organizationId}",method = RequestMethod.DELETE)
+//    @DeleteMapping(value="/{organizationId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @RolesAllowed("ADMIN")
+//    public void deleteOrganization(@RequestBody Organization organization) {
+//        service.delete(organization);
+//    }
+
+    @DeleteMapping(value="/{organizationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrganization( @PathVariable("id") String id,  @RequestBody Organization organization) {
-        service.delete(organization);
+    @RolesAllowed("ADMIN")
+    public void deleteOrganization(@PathVariable String organizationId) {
+        service.deleteById(organizationId);
     }
 
 }

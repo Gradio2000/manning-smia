@@ -1,6 +1,5 @@
 package com.optimagrowth.license;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,10 +24,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @RefreshScope
 @EnableDiscoveryClient
 @EnableFeignClients
-public class LicenseServiceApplication {
+public class LicenseServiceApplication1 {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LicenseServiceApplication.class, args);
+		SpringApplication.run(LicenseServiceApplication1.class, args);
 	}
 
 	@Autowired
