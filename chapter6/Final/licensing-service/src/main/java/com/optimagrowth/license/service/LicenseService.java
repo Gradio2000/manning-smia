@@ -48,7 +48,7 @@ public class LicenseService {
 			throw new IllegalArgumentException(String.format(messages.getMessage("license.search.error.message", null, null),licenseId, organizationId));	
 		}
 
-		Organization organization = retrieveOrganizationInfo(organizationId, clientType);
+		Organization organization = retrieveOrganizationInfo(organizationId);
 		if (null != organization) {
 			license.setOrganizationName(organization.getName());
 			license.setContactName(organization.getContactName());
@@ -59,28 +59,10 @@ public class LicenseService {
 		return license.withComment(config.getProperty());
 	}
 
-	private Organization retrieveOrganizationInfo(String organizationId, String clientType) {
-		Organization organization = null;
-
-		switch (clientType) {
-		case "feign":
-			System.out.println("I am using the feign client");
-			organization = organizationFeignClient.getOrganization(organizationId);
-			break;
-		case "rest":
-			System.out.println("I am using the rest client");
-			organization = organizationRestClient.getOrganization(organizationId);
-			break;
-		case "discovery":
-			System.out.println("I am using the discovery client");
-			organization = organizationDiscoveryClient.getOrganization(organizationId);
-			break;
-		default:
-//			organization = organizationRestClient.getOrganization(organizationId);
-			organization = myWebClient.getOrganization(organizationId);
-			break;
-		}
-
+	private Organization retrieveOrganizationInfo(String organizationId) {
+		Organization organization;
+//		organization = organizationRestClient.getOrganization(organizationId);
+		organization = myWebClient.getOrganization(organizationId);
 		return organization;
 	}
 

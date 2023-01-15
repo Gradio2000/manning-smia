@@ -19,6 +19,7 @@ public class OrganizationController {
 
 
     @GetMapping(value="/{organizationId}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Organization> getOrganization( @PathVariable("organizationId") String organizationId) {
         return ResponseEntity.ok(service.findById(organizationId));
     }

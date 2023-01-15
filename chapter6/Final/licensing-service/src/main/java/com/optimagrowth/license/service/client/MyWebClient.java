@@ -22,7 +22,7 @@ public class MyWebClient {
                 .header(UserContext.CORRELATION_ID, UserContextHolder.getContext().getCorrelationId())
                 .header(UserContext.ORGANIZATION_ID, UserContextHolder.getContext().getOrganizationId())
                 .header(UserContext.USER_ID, UserContextHolder.getContext().getUserId())
-                .header(UserContext.AUTH_TOKEN, UserContextHolder.getContext().getAuthToken())
+                .header("Authorization", UserContextHolder.getContext().getAuthToken())
                 .retrieve()
                 .bodyToMono(Organization.class)
                 .block();
